@@ -77,7 +77,7 @@ read -p "Do you want to remove all packages that were installed during the runni
                 echo "I do not understand that value, please choose yes or no"
             fi
 
-read -p "Do you want to initiate final cleanup? All log files will be moved to the backup directory" ANS3
+read -p "Do you want to initiate final cleanup? All log files will be moved to the backup directory? (Yes/No)" ANS3
 if [ "$ANS3" =  "yes" ]; then
                 echo "Moving Log Files... Please Wait"
                 FOLD=$((mkdir "$WORKDIR/`date +%k%M%a`"))
