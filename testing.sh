@@ -42,7 +42,7 @@ find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findt
 dpkg-query -l &> $WORKDIR/packlist2.txt
 
 #compare the two files and add anything that doesn't match to new file
-grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
+grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt &> packexc.txt
 
 #clean up, remove packages, remove all added files
 
