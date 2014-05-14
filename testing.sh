@@ -21,9 +21,9 @@ fi
 
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
-dpkg-query -W -f='${Package}\n'&> $WORKDIR/packlist1.txt
+dpkg-query -W -f='${Package}\n' &> $WORKDIR/packlist1.txt
 
-#Get script to run via command line
+#Get script to run via command line by using script to be tested as argument
 
 STARTT=$(date +%M)
 file="$1"
@@ -59,9 +59,11 @@ read -p "Do you want to delete all files created during the running of $file? (Y
 read -p "Do you want to remove all packages that were installed during the running of $file? (Yes/No)" ANS
   if (( $ANS =  "yes" )); then
                 echo "Uninstalling/Removing Packages... Please Wait"
-                rm -rf "$(<packexc.txt)"
+                apt-get -y remove "$(<packexc.txt)"
+                apt-get -y purge "$(<packexc.txt)"
       elif (( $ANS = "no" )); then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
                 echo "I do not understand that value, please choose yes or no"
             fi
+
