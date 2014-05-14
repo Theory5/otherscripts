@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #This is my first attempt at a testing framework, which will return all information/errors from a script
 #This should only be run in a VM with a fresh installation of ubuntu
 
