@@ -17,19 +17,27 @@ WORKDIR=$(pwd)
 #define directory list for find to exclude
 DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var"))
 
-
-
-
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
 dpkg-query -W -f='${Package}\n' &> $WORKDIR/packlist1.txt
 
 #Get script to run via command line by using script to be tested as argument
 
+
+if [ -f "$1" ];then
+
 STARTT=$(date +%M)
 file="$1"
-sh ./"$file" | read line echo  1>& stdout.log 2>& stderr.log
-ENDT=$(date +%M)
+sh ./"$file" | read line echo  1>& stdout.txt 2>& stderr.txt
+ENDT=$(date +%M) 
+
+else
+
+echo "No File Or Script Specified. Please Try Again With -f 'script.sh'"
+
+return
+
+fi  
 
 TIME1=$(( $ENDT - $STARTT ))
 
@@ -70,3 +78,13 @@ read -p "Do you want to remove all packages that were installed during the runni
                 echo "I do not understand that value, please choose yes or no"
             fi
 
+read -p "Do you want to initiate final cleanup? All log files will be moved to the backup directory"
+if (( $ANS =  "yes" )); then
+                echo "Moving Log Files... Please Wait"
+                FOLD=$((mkdir "$WORKDIR/`date +%k%M%a`"))
+                mv 'packlist1.txt packlist2.txt packexc.txt findtime.txt stdout.txt stderr.txt' '$WORKDIR/$FOLD'
+      elif (( $ANS = "no" )); then
+           echo "Nothing Will Be Moved, The Files Will Stay in $WORKDIR"     
+            else
+                echo "I do not understand that value, please choose yes or no"
+            fi
