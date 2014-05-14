@@ -16,7 +16,7 @@ fi
 WORKDIR=$(pwd)
 
 #define directory list for find to exclude
-DIRLIST1=$($WORKDIR /var/log /mnt /lost+found /dev /var)
+DIRLIST1=$"$WORKDIR /var/log /mnt /lost+found /dev /var"
 
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
@@ -25,12 +25,11 @@ dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist1.txt
 #Get script to run via command line by using script to be tested as argument
 
 if [ -n "$1" ];then
-
 STARTT=$(date +%M)
 file="$1"
-sh ./"$file" | read line echo  1> stdout.txt 2> stderr.txt
-ENDT=$(date +%M) 
-
+sh ./"$file" | read line echo 1> stdout.txt 2> stderr.txt
+ENDT=$(date +%M)
+TIME1=$( $ENDT - $STARTT )
 else
 
 echo "No File Or Script Specified. Please Try Again With -f 'script.sh'"
@@ -39,7 +38,7 @@ return
 
 fi  
 
-TIME1=$( $ENDT - $STARTT )
+
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
 find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print > findtime.log
@@ -58,32 +57,32 @@ grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
 #clean up, remove packages, remove all added files
 
 read -p "Do you want to delete all files created during the running of $file? (Yes/No)" ANS1
-  if ( $ANS1 =  "yes" ); then
+  if $ANS1 =  "yes"; then
                 echo "Deleting Files... Please Wait"
                 rm -rf "$(< findtime.txt)"
-      elif ( $ANS1 = "no" ); then
+      elif $ANS1 = "no"; then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
                 echo "I do not understand that value, please choose yes or no"
             fi
             
 read -p "Do you want to remove all packages that were installed during the running of $file? (Yes/No)" ANS2
-  if ( $ANS2 =  "yes" ); then
+  if $ANS2 = "yes"; then
                 echo "Uninstalling/Removing Packages... Please Wait"
                 apt-get -y remove "$(<packexc.txt)"
                 apt-get -y purge "$(<packexc.txt)"
-      elif ( $ANS2 = "no" ); then
+      elif $ANS2 = "no"; then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
                 echo "I do not understand that value, please choose yes or no"
             fi
 
 read -p "Do you want to initiate final cleanup? All log files will be moved to the backup directory" ANS3
-if ( $ANS3 =  "yes" ); then
+if $ANS3 =  "yes"; then
                 echo "Moving Log Files... Please Wait"
                 FOLD=$((mkdir "$WORKDIR/`date +%k%M%a`"))
                 mv 'packlist1.txt packlist2.txt packexc.txt findtime.txt stdout.txt stderr.txt' '$WORKDIR/$FOLD'
-      elif ( $ANS3 = "no" ); then
+      elif $ANS3 = "no"; then
            echo "Nothing Will Be Moved, The Files Will Stay in $WORKDIR"     
             else
                 echo "I do not understand that value, please choose yes or no"
