@@ -23,7 +23,9 @@ file="$1"
 sh ./"$file" | read line echo  1>& stdout.log 2>& stderr.log
 ENDT=$(date +%M)
 
-ELAPSED=$(( $ENDT - $STARTT ))
+TIME1=$(( $ENDT - $STARTT ))
 
-#find all files modified in the time of $ELAPSED
+#find all files modified in the time of $TIME1
+find -mmin $TIME1 &> findtime.log
+
 
