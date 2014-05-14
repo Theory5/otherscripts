@@ -30,7 +30,7 @@ STARTT=$(date +%M)
 file="$1"
 /bin/bash "$file" | readline echo 1> stdout.txt 2> stderr.txt
 ENDT=$(date +%M)
-TIME1=$(( $ENDT - $STARTT ))
+TIME1=$($ENDT - $STARTT)
 else
 
 echo "No File Or Script Specified. Please Try Again With 'script.sh'"
