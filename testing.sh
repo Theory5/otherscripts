@@ -43,3 +43,7 @@ dpkg-query -l &> $WORKDIR/packlist2.txt
 
 #compare the two files
 grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt
+
+#get list of file perms
+find 
+
