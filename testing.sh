@@ -25,7 +25,8 @@ ENDT=$(date +%M)
 
 TIME1=$(( $ENDT - $STARTT ))
 
-#find all files modified in the time of $TIME1
-find -mmin $TIME1 &> findtime.log
+#find all files modified in the time of $TIME1 and print to new file for logging purposes
+find -mmin $TIME1 -path $workdir -prune -o -print &> findtime.log
+
 
 
