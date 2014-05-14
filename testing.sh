@@ -10,7 +10,7 @@ WORKDIR=$(pwd)
 
 #define directory list for find to exclude
 
-DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var "))
+DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var"))
 
 
 # Run as root, of course.
