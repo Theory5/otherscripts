@@ -28,7 +28,7 @@ if [ -f "$1" ];then
 
 STARTT=$(date +%M)
 file="$1"
-sh ./"$file" | read line echo  1>& stdout.txt 2>& stderr.txt
+sh ./"$file" | read line echo  1> stdout.txt 2> stderr.txt
 ENDT=$(date +%M) 
 
 else
