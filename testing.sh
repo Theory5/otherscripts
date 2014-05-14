@@ -1,6 +1,12 @@
 #This is my first attempt at a testing framework, which will return all information/errors from a script
 #This should only be run in a VM with a fresh installation of ubuntu
 
+#define all variables needed for entire script
+ROOT_UID=0     # Only users with $UID 0 have root privileges.
+E_NOTROOT=87   # Non-root exit error.
+
+#define working directory for future use, add to variable $workdir
+workdir=$(pwd)
 # Run as root, of course.
 if [ "$UID" -ne "$ROOT_UID" ]
 then
@@ -8,9 +14,9 @@ then
   exit $E_NOTROOT
 fi  
 
-#define working directory for future use, add to variable $workdir
 
-workdir=$(pwd)
+
+
 
 #Get package list and add to new file. Will be used for comparison later
 
