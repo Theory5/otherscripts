@@ -35,6 +35,8 @@ TIME1=$(( $ENDT - $STARTT ))
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
 find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
+#get list of all packages with modified permissions
+ls -la "$(<findtime.log)"
 #run dpkg again to get 2nd list for comparison, again strip everything but package name
 
 dpkg-query -W -f='${Package}\n' &> $WORKDIR/packlist2.txt
