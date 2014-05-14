@@ -50,7 +50,7 @@ ls -la "$(<findtime.log)"
 dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist2.txt
 
 #compare the two files and add anything that doesn't match to new file
-grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
+grep -Fxvf packlist1.txt packlist2.txt > packexc.txt
 
 
 
