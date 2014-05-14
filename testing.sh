@@ -24,7 +24,7 @@ dpkg-query -W -f='${Package}\n' &> $WORKDIR/packlist1.txt
 
 #Get script to run via command line by using script to be tested as argument
 
-if [ -e "$1" ];then
+if [ -ne "$1" ];then
 
 STARTT=$(date +%M)
 file="$1"
