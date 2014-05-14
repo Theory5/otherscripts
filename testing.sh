@@ -5,6 +5,12 @@
 ROOT_UID=0     # Only users with $UID 0 have root privileges.
 E_NOTROOT=87   # Non-root exit error.
 
+# Run as root, of course.
+if [ "$UID" -ne "$ROOT_UID" ]; then
+  echo "Must be root to run this script."
+  exit $E_NOTROOT
+fi  
+
 #define working directory for future use, add to variable $workdir
 WORKDIR=$(pwd)
 
@@ -12,11 +18,6 @@ WORKDIR=$(pwd)
 DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var"))
 
 
-# Run as root, of course.
-if [ "$UID" -ne "$ROOT_UID" ]; then
-  echo "Must be root to run this script."
-  exit $E_NOTROOT
-fi  
 
 
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
