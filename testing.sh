@@ -17,7 +17,7 @@ fi
 WORKDIR=$(pwd)
 
 #define directory list for find to exclude
-DIRLIST1=$"$WORKDIR /var/log /mnt /lost+found /dev /var"
+DIRLIST1=$($WORKDIR /var/log /mnt /lost+found /dev /var)
 
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
