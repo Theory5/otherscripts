@@ -1,3 +1,4 @@
+!/bin/bash
 #This is my first attempt at a testing framework, which will return all information/errors from a script
 #This should only be run in a VM with a fresh installation of ubuntu
 
@@ -27,12 +28,12 @@ dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist1.txt
 if [ -n "$1" ];then
 STARTT=$(date +%M)
 file="$1"
-sh ./"$file" | readline echo 1> stdout.txt 2> stderr.txt
+sh "$file" | readline echo 1> stdout.txt 2> stderr.txt
 ENDT=$(date +%M)
 TIME1=$( $ENDT - $STARTT )
 else
 
-echo "No File Or Script Specified. Please Try Again With -f 'script.sh'"
+echo "No File Or Script Specified. Please Try Again With 'script.sh'"
 
 return
 
