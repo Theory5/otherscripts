@@ -6,7 +6,13 @@ ROOT_UID=0     # Only users with $UID 0 have root privileges.
 E_NOTROOT=87   # Non-root exit error.
 
 #define working directory for future use, add to variable $workdir
-workdir=$(pwd)
+WORKDIR=$(pwd)
+
+#define directory list for find to exclude
+
+DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var "))
+
+
 # Run as root, of course.
 if [ "$UID" -ne "$ROOT_UID" ]
 then
@@ -15,12 +21,9 @@ then
 fi  
 
 
-
-
-
 #Get package list and add to new file. Will be used for comparison later
 
-dpkg-query -l &> $workdir/packlist1.txt
+dpkg-query -l &> $WORKDIR/packlist1.txt
 
 #Get script to run via command line
 
@@ -32,7 +35,7 @@ ENDT=$(date +%M)
 TIME1=$(( $ENDT - $STARTT ))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
-find -mmin $TIME1 -path $workdir -prune -o -print &> findtime.log
+find -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
 
 
