@@ -46,7 +46,7 @@ grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
 
 #clean up, remove packages, remove all added files
 
-read -p "Do You Want To delete all files created during the running of $file? (Yes/No)" $ANS
+read -p "Do you want to delete all files created during the running of $file? (Yes/No)" $ANS
   if (( $ANS =  "yes" )); then
                 echo "Deleting Files... Please Wait"
                 rm -rf "$(< findtime.txt)"
