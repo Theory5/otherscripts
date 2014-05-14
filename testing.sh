@@ -57,32 +57,32 @@ grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
 #clean up, remove packages, remove all added files
 
 read -p "Do you want to delete all files created during the running of $file? (Yes/No)" ANS1
-  if $ANS1 =  "yes"; then
+  if [ "$ANS1" =  "yes" ]; then
                 echo "Deleting Files... Please Wait"
                 rm -rf "$(< findtime.txt)"
-      elif $ANS1 = "no"; then
+      elif [ "$ANS1" = "no" ]; then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
                 echo "I do not understand that value, please choose yes or no"
             fi
             
 read -p "Do you want to remove all packages that were installed during the running of $file? (Yes/No)" ANS2
-  if $ANS2 = "yes"; then
+  if [ "$ANS2" = "yes" ]; then
                 echo "Uninstalling/Removing Packages... Please Wait"
                 apt-get -y remove "$(<packexc.txt)"
                 apt-get -y purge "$(<packexc.txt)"
-      elif $ANS2 = "no"; then
+      elif [ "$ANS2" = "no" ]; then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
                 echo "I do not understand that value, please choose yes or no"
             fi
 
 read -p "Do you want to initiate final cleanup? All log files will be moved to the backup directory" ANS3
-if $ANS3 =  "yes"; then
+if [ "$ANS3" =  "yes" ]; then
                 echo "Moving Log Files... Please Wait"
                 FOLD=$((mkdir "$WORKDIR/`date +%k%M%a`"))
                 mv 'packlist1.txt packlist2.txt packexc.txt findtime.txt stdout.txt stderr.txt' '$WORKDIR/$FOLD'
-      elif $ANS3 = "no"; then
+      elif [ "$ANS3" = "no" ]; then
            echo "Nothing Will Be Moved, The Files Will Stay in $WORKDIR"     
             else
                 echo "I do not understand that value, please choose yes or no"
