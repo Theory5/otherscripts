@@ -37,5 +37,9 @@ TIME1=$(( $ENDT - $STARTT ))
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
 find -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
+#run dpkg again to get 2nd list for comparison
 
+dpkg-query -l &> $WORKDIR/packlist2.txt
 
+#compare the two files
+grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt
