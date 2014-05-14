@@ -18,3 +18,12 @@ dpkg-query -l &> $workdir/packlist1.txt
 
 #Get script to run via command line
 
+STARTT=$(date +%M)
+file="$1"
+sh ./"$file" | read line echo  1>& stdout.log 2>& stderr.log
+ENDT=$(date +%M)
+
+ELAPSED=$(( $ENDT - $STARTT ))
+
+#find all files modified in the time of $ELAPSED
+
