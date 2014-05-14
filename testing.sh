@@ -9,7 +9,6 @@ E_NOTROOT=87   # Non-root exit error.
 WORKDIR=$(pwd)
 
 #define directory list for find to exclude
-
 DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var"))
 
 
@@ -20,9 +19,9 @@ if [ "$UID" -ne "$ROOT_UID" ]; then
 fi  
 
 
-#Get package list and add to new file. Will be used for comparison later
+#Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
-dpkg-query -l &> $WORKDIR/packlist1.txt
+dpkg-query -W -f='${Package}\n'&> $WORKDIR/packlist1.txt
 
 #Get script to run via command line
 
@@ -36,12 +35,14 @@ TIME1=$(( $ENDT - $STARTT ))
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
 find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
-#run dpkg again to get 2nd list for comparison
+#run dpkg again to get 2nd list for comparison, again strip everything but package name
 
-dpkg-query -l &> $WORKDIR/packlist2.txt
+dpkg-query -W -f='${Package}\n' &> $WORKDIR/packlist2.txt
 
 #compare the two files and add anything that doesn't match to new file
 grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt &> packexc.txt
+
+
 
 #clean up, remove packages, remove all added files
 
@@ -55,3 +56,12 @@ read -p "Do you want to delete all files created during the running of $file? (Y
                 echo "I do not understand that value, please choose yes or no"
             fi
             
+read -p "Do you want to remove all packages that were installed during the running of $file? (Yes/No)" ANS
+  if (( $ANS =  "yes" )); then
+                echo "Uninstalling/Removing Packages... Please Wait"
+                rm -rf "$()"
+      elif (( $ANS = "no" )); then
+           echo "Nothing Will Be Deleted. Good Day!"     
+            else
+                echo "I do not understand that value, please choose yes or no"
+            fi
