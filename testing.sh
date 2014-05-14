@@ -41,9 +41,8 @@ find -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
 dpkg-query -l &> $WORKDIR/packlist2.txt
 
-#compare the two files
-grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt
+#compare the two files and add anything that doesn't match to new file
+grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
 
-#get list of file perms
-find 
+
 
