@@ -59,7 +59,7 @@ read -p "Do you want to delete all files created during the running of $file? (Y
 read -p "Do you want to remove all packages that were installed during the running of $file? (Yes/No)" ANS
   if (( $ANS =  "yes" )); then
                 echo "Uninstalling/Removing Packages... Please Wait"
-                rm -rf "$()"
+                rm -rf "$(<packexc.txt)"
       elif (( $ANS = "no" )); then
            echo "Nothing Will Be Deleted. Good Day!"     
             else
