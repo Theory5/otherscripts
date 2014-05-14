@@ -14,8 +14,7 @@ DIRLIST1=$(("$WORKDIR /var/log /mnt /lost+found /dev /var"))
 
 
 # Run as root, of course.
-if [ "$UID" -ne "$ROOT_UID" ]
-then
+if [ "$UID" -ne "$ROOT_UID" ]; then
   echo "Must be root to run this script."
   exit $E_NOTROOT
 fi  
