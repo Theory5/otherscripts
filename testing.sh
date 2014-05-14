@@ -35,7 +35,7 @@ ENDT=$(date +%M)
 TIME1=$(( $ENDT - $STARTT ))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
-find -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
+find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print &> findtime.log
 
 #run dpkg again to get 2nd list for comparison
 
@@ -44,5 +44,15 @@ dpkg-query -l &> $WORKDIR/packlist2.txt
 #compare the two files and add anything that doesn't match to new file
 grep -Fxvf $WORKDIR/packlist1.txt $WORKDIR/packlist2.txt > packexc.txt
 
+#clean up, remove packages, remove all added files
 
-
+read -p "Do You Want To delete all files created during the running of $file? (Yes/No)" $ANS
+  if (( $ANS =  "yes" )); then
+                echo "Deleting Files... Please Wait"
+                rm -rf "$(< findtime.txt)"
+      elif (( $ANS = "no" )); then
+           echo "Nothing Will Be Deleted. Good Day!"     
+            else
+                echo "I do not understand that value, please choose yes or no"
+            fi
+            
