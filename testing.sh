@@ -26,10 +26,10 @@ dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist1.txt
 #Get script to run via command line by using script to be tested as argument
 
 if [ -n "$1" ];then
-STARTT=$(date +%M)
+STARTT=$(date +%s)
 file="$1"
 /bin/bash "$file" | readline echo 1> stdout.txt 2> stderr.txt
-ENDT=$(date +%M)
+ENDT=$(date +%s)
 TIME1=$($ENDT - $STARTT)
 else
 
@@ -39,10 +39,10 @@ return
 
 fi  
 
-
+TIME2=$(( 60 / $TIME1 ))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
-find -ignore_readdir_race -mmin $TIME1 -path $DIRLIST1 -prune -o -print > findtime.log
+find -ignore_readdir_race -mmin $TIME2 -$TIME2 -path $DIRLIST1 -prune -o -print > findtime.log
 
 #get list of all packages with modified permissions
 ls -la "$(<findtime.log)"
