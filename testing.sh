@@ -17,7 +17,7 @@ fi
 WORKDIR=$(pwd)
 
 #define directory list for find to exclude
-DIRLIST1=$($WORKDIR /var/log /mnt /lost+found /dev /var)
+DIRLIST1=$(/var/log /mnt /lost+found /dev /var)
 
 #Get package list and add to new file. Will be used for comparison later. Strip everything but package name
 
@@ -42,7 +42,7 @@ fi
 TIME2=$(($TIME1 / 60))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
-find -ignore_readdir_race -mmin $TIME2 -mmin -$TIME2 -path $DIRLIST1 -prune -o -print > findtime.log
+find -ignore_readdir_race -mmin $TIME2 -mmin -$TIME2 -path $WORKDIR $DIRLIST1 -prune -o -print > findtime.log
 
 #get list of all packages with modified permissions
 ls -la "$(<findtime.log)" tee echo > $WORKDIR/modfiles.txt 2> /dev/null
