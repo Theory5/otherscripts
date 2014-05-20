@@ -42,7 +42,7 @@ fi
 TIME2=$(( 60 / $TIME1 ))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
-find -ignore_readdir_race -mmin $TIME2 -$TIME2 -path $DIRLIST1 -prune -o -print > findtime.log
+find -ignore_readdir_race -mmin $TIME2 -mmin -$TIME2 -path $DIRLIST1 -prune -o -print > findtime.log
 
 #get list of all packages with modified permissions
 ls -la "$(<findtime.log)"
