@@ -30,7 +30,7 @@ STARTT=$(date +%s%N)
 file="$1"
 /bin/bash "$file" tee echo > stdout.txt 2> stderr.txt
 ENDT=$(date +%s%N)
-TIME1=$($ENDT - $STARTT)
+TIME1=$(($ENDT - $STARTT))
 else
 
 echo "No File Or Script Specified. Please Try Again With 'script.sh'"
@@ -39,7 +39,7 @@ return
 
 fi  
 
-TIME2=$(( $TIME1 / 60 ))
+TIME2=$(($TIME1 / 60))
 
 #find all files modified in the time of $TIME1 and print to new file for logging purposes
 find -ignore_readdir_race -mmin $TIME2 -mmin -$TIME2 -path $DIRLIST1 -prune -o -print > findtime.log
