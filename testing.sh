@@ -28,7 +28,7 @@ dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist1.txt
 if [ -n "$1" ];then
 STARTT=$(date +%s%N)
 file="$1"
-/bin/bash "$file" | read line echo 1> stdout.txt 2> stderr.txt
+/bin/bash "$file" |tee echo > stdout.txt 2> stderr.txt
 ENDT=$(date +%s%N)
 TIME1=$($ENDT - $STARTT)
 else
