@@ -5,7 +5,7 @@
 #define all variables needed for entire script
 ROOT_UID=0     # Only users with $UID 0 have root privileges.
 E_NOTROOT=87   # Non-root exit error.
-UID=$(id -u)
+
 
 # Run as root, of course.
 if [ "$UID" -ne "$ROOT_UID" ]; then
