@@ -52,10 +52,17 @@ ls -la "$(<findtime.log)" tee echo > $WORKDIR/modfiles.txt 2> /dev/null
 dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist2.txt
 
 #compare the two files and add anything that doesn't match to new file
-grep -Fxvf packlist1.txt packlist2.txt > packexc.txt
+PKG1=$(packlist1.txt)
+PKG2=$(packlist2.txt)
 
+if [ "PKG1" != "PKG2" ];then
+diff packlist1.txt packlist2.txt > packexc.txt
 
+else
 
+echo "No Package Have Been Altered"
+
+fi
 #clean up, remove packages, remove all added files
 
 read -p "Do you want to delete all files created during the running of $file? (y/n)" ANS1
