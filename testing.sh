@@ -1,7 +1,8 @@
 #!/bin/bash
-#This is my first attempt at a testing framework, which will return all information/errors from a script
+#This is my first attempt at a testing framework, which will return all information/errors from a script to log files
+#the logs files should be self explainitory. You can use this script to troubleshoot other scripts easier (hopefully).
 #This should only be run in a VM with a fresh installation of ubuntu
-
+#Written by Theory5, with help from April and Ziggy. Use as you will, just give me some credit!
 #define all variables needed for entire script
 ROOT_UID=0     # Only users with $UID 0 have root privileges.
 E_NOTROOT=87   # Non-root exit error.
