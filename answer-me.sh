@@ -9,6 +9,7 @@ function Usage () {
 cat <<EOF
 USAGE:  $0 [-s]
 	-s short options only
+	-d Use a default value of y/yes on enter
         Asks a question and executes different commands based on your response.
         For demonstration purposes only.
 EOF
@@ -16,10 +17,12 @@ EOF
 # To add options: add the character to getopts and add the option to the case statement.
 # Options with an argument must have a : following them in getopts.  The value is stored in OPTARG
 # The lone : at the start of the getopts suppresses verbose error messages from getopts.
-while getopts ":hs" Option; do
+while getopts ":hsd" Option; do
 	case ${Option} in
 
 		s )	LONGOPTIONS="False";;
+
+		d )	DEFAULT_YES="True";;
 
 # Options are terminated with ;;
 
@@ -37,9 +40,13 @@ done
 # This function will allow you to repeat the question until you get a valid answer
 function AnswerMe () {
 	read -n1 -p "Answer the question with y/Y or n/N:" RESPONSE
-	# echo is used here because read stops at the first character and does not
-	# have a newline at the end of the prompt.
-	echo
+	if [ "${DEFAULT_YES:-False}" = "True" ] && [ -z "$RESPONSE" ]; then
+		RESPONSE="${RESPONSE:=Y}"
+	else
+		# echo is used here because read stops at the first character and does not
+		# have a newline at the end of the prompt.
+		echo
+	fi
 	#Force RESPONSE to uppercase, case is still preserved in the variable
 	case ${RESPONSE^^} in
 		Y )	echo You responded with $RESPONSE;;
@@ -52,6 +59,9 @@ function AnswerMe () {
 function LongAnswerMe () {
 	read -p "Answer the question with y/yes or n/no (case insensitive):" RESPONSE
 	#Force REPONSE to lowercase, case is still preserved in the variable
+	if [ "${DEFAULT_YES:-False}" = "True" ] && [ -z "$RESPONSE" ]; then
+		RESPONSE="${RESPONSE:=Yes}"
+	fi
 	case ${RESPONSE,,} in
 		y|yes )	echo You responded with $RESPONSE;;
 		n|no )	echo You responded with $RESPONSE;;
