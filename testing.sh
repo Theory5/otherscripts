@@ -64,7 +64,6 @@ ls -la "$(<findtime.log)" tee echo > $WORKDIR/modfiles.txt 2> /dev/null
 dpkg-query -W -f='${Package}\n' > $WORKDIR/packlist2.txt
 
 #compare the two files and add anything that doesn't match to new file
-#FIXME I added the < here for you, delete this comment after reading
 PKG1=$(<packlist1.txt)
 PKG2=$(<packlist2.txt)
 
