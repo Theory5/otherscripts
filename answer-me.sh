@@ -7,9 +7,12 @@
 #	
 function Usage () {
 cat <<EOF
-USAGE:  $0 [-s]
+USAGE:  $0 [-sdy]
+
 	-s short options only
 	-d Use a default value of y/yes on enter
+	-y skip prompt and answer y/yes
+
         Asks a question and executes different commands based on your response.
         For demonstration purposes only.
 EOF
@@ -17,8 +20,10 @@ EOF
 # To add options: add the character to getopts and add the option to the case statement.
 # Options with an argument must have a : following them in getopts.  The value is stored in OPTARG
 # The lone : at the start of the getopts suppresses verbose error messages from getopts.
-while getopts ":hsd" Option; do
+while getopts ":hsdy" Option; do
 	case ${Option} in
+
+		y )	ANSWER_YES="True";;
 
 		s )	LONGOPTIONS="False";;
 
@@ -39,13 +44,18 @@ done
 
 # This function will allow you to repeat the question until you get a valid answer
 function AnswerMe () {
-	read -n1 -p "Answer the question with y/Y or n/N:" RESPONSE
+	# Similar to how apt-get ugrade -y would not prompt for yes/no
+	if [ "${ANSWER_YES:-False}" = "True" ]; then
+		RESPONSE="Y"
+	else
+		read -n1 -p "Answer the question with y/Y or n/N:" RESPONSE
+	fi
 	if [ "${DEFAULT_YES:-False}" = "True" ] && [ -z "$RESPONSE" ]; then
 		RESPONSE="${RESPONSE:=Y}"
 	else
 		# echo is used here because read stops at the first character and does not
-		# have a newline at the end of the prompt.
-		echo
+		# have a newline at the end of the prompt.  With -y this is not executed.
+		[ "${ANSWER_YES:-False}" = "True" ] || echo
 	fi
 	#Force RESPONSE to uppercase, case is still preserved in the variable
 	case ${RESPONSE^^} in
@@ -57,7 +67,12 @@ function AnswerMe () {
 }
 # This function will allow both long and short options y and yes, n and no
 function LongAnswerMe () {
-	read -p "Answer the question with y/yes or n/no (case insensitive):" RESPONSE
+	# Similar to how apt-get ugrade -y would not prompt for yes/no
+	if [ "${ANSWER_YES:-False}" = "True" ]; then
+		RESPONSE="Yes"
+	else
+		read -p "Answer the question with y/yes or n/no (case insensitive):" RESPONSE
+	fi
 	#Force REPONSE to lowercase, case is still preserved in the variable
 	if [ "${DEFAULT_YES:-False}" = "True" ] && [ -z "$RESPONSE" ]; then
 		RESPONSE="${RESPONSE:=Yes}"
