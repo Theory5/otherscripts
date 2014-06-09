@@ -1,25 +1,26 @@
 #!/bin/bash
 
-#This script will accept a list of files in single line format and output the MD5 #as well as check if said file exists on a remote target.
+#This script will accept a list of files fromatted to show MD5 and then file name.
 
-ROOT_UID=0 # Only users with $UID 0 have root privileges.
-E_NOTROOT=87 # Non-root exit error.
+echo "Please specify the two text files you wish to compare."
+read -e -p "Specify The First text file: " input
+read -e -p "Specify The Second text file: " input2
 
+file1="${input}"
+file2="${input2}"
 
-# Run as root, of course.
-if [ "$UID" -ne "$ROOT_UID" ]; then
-	echo "Must be root to run this script."
-	exit $E_NOTROOT
-fi 
+#For temp file storage append number to filename starting at 1 for temporary use
+name=$(($file1_tmp))
+name2=$(($file2_tmp))
 
-read -p "Please provide the path and name for your list." VARLIST
+#strip numbered lines from each file
+sed 's/ *[0-9]*.//' $file1 > "$name.txt"
+sed 's/ *[0-9]*.//' $file1 > "$name2.txt"
 
-if [ -f $VARLIST ];
-then 
+join <(sort "$name.txt") <(sort "$name2.txt") &> comb.txt
 
-	if [ -f 
-	echo -n "$(<$VARLIST)"| md5sum
+awk '{print $2}' comb.txt &> final.txt
 
-else
-	echo "No Such Input File, please try again"
-fi
+sed '/^$/d' final.txt > final2.txt
+
+sed -e 's/^/rm /' final2.txt > finalized.txt
