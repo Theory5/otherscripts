@@ -24,3 +24,13 @@ awk '{print $2}' comb.txt &> final.txt
 sed '/^$/d' final.txt > final2.txt
 
 sed -e 's/^/rm /' final2.txt > finalized.txt
+
+read -p "Do you want to delete all files created during the running of this script? (y/n)" ANS1
+if [ "$ANS1" = "y" ]; then
+echo "Deleting Files... Please Wait"
+rm -rf $name.txt $name2.txt comb.txt final.txt final2.txt
+elif [ "$ANS1" = "n" ]; then
+echo "Nothing Will Be Deleted. Good Day!"
+else
+echo "I do not understand that value, please choose yes or no"
+fi
