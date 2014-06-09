@@ -10,8 +10,8 @@ file1="${input}"
 file2="${input2}"
 
 #For temp file storage append number to filename starting at 1 for temporary use
-${file1}_tmp
-${file2}_tmp
+name=${file1}_tmp
+name2=${file2}_tmp
 
 #strip numbered lines from each file
 sed 's/ *[0-9]*.//' $file1 > "$name.txt"
