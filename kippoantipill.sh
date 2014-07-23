@@ -22,7 +22,7 @@ then
         
         echo "Restarting Kippo"
 
-        twistd -y kippo.tac -l /var/kippo/log/kippo.log --pidfile /var/run/kippo/kippo.pid
+        /etc/init.d/kippo start
 
         PID=$(cat $PIDFILE 2>/dev/null)
 
