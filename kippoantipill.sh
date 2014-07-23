@@ -14,6 +14,9 @@ PIDFILE=kippo.pid
 
 if ! [ -f /var/run/kippo/$PIDFILE ]
 then
+        echo "Kippo is running"
+        
+else
         echo "Kippo is not running, activating soul stone..."
         mkdir -p /var/run/kippo/
         chown -R kippo:kippo /var/run/kippo/
