@@ -28,6 +28,7 @@ then
 
         if ! [ -n "$PID" ]
                 then
+                /etc/init.d/kippo status
                 echo "Kippo is up and running again! YAY!"
                
 fi
