@@ -21,16 +21,18 @@ else
         mkdir -p /var/run/kippo/
         chown -R kippo:kippo /var/run/kippo/
         exit
+        
+        echo "Restarting Kippo"
+
+        twistd -y kippo.tac -l /var/kippo/log/kippo.log --pidfile /var/run/kippo/kippo.pid
+
+        PID=$(cat $PIDFILE 2>/dev/null)
+
+        if ! [ -n "$PID" ]
+                then
+                echo "Kippo is up and running again! YAY!"
+                exit
 fi
 
-echo "Restarting Kippo"
-
-twistd -y kippo.tac -l /var/kippo/log/kippo.log --pidfile /var/run/kippo/kippo.pid
-
-PID=$(cat $PIDFILE 2>/dev/null)
-
-if ! [ -n "$PID" ]
-then
-        echo "Kippo is up and running again! YAY!"
-        exit
 fi
+
