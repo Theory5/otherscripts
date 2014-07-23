@@ -18,7 +18,7 @@ then
          echo "Kippo is not running, activating soul stone..."
         mkdir -p /var/run/kippo/
         chown -R kippo:kippo /var/run/kippo/
-        exit
+
         
         echo "Restarting Kippo"
 
@@ -29,7 +29,7 @@ then
         if ! [ -n "$PID" ]
                 then
                 echo "Kippo is up and running again! YAY!"
-                exit
+               
 fi
 else
  
