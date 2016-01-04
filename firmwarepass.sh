@@ -3,6 +3,8 @@
 #script to enable Firmware password so main admin/root PW cannot be reset arbitrarily
 #only used/tested on latest El Capitan, previous OS X OS’s may have difficulties
 
+#this should not be used on Linux or Unix systems besides OS X, El Capitan Recommended!
+
 #mount recovery HD to get at BaseSystem.dmg, mount BaseSystem.dmg (diskutil does not allow 
 #mount, hence hdiutil usage)
 
